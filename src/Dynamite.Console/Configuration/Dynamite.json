@@ -1,0 +1,6 @@
+﻿{
+    "UpdateFrequency": "00:01:00",
+    "ProviderTypeNames": [
+        "DnsMadeEasyDynamicDnsProvider"
+    ] 
+}
