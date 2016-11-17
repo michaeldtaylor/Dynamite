@@ -27,7 +27,7 @@ namespace Dynamite.Console.Infrastructure
 
         static string GetConfigurationFilePath(string simpleName)
         {
-            return Path.Combine(Environment.CurrentDirectory, "Configuration", $"{simpleName}.json");
+            return Path.Combine(AssemblyHelper.AssemblyDirectory, "Configuration", $"{simpleName}.json");
         }
     }
 }

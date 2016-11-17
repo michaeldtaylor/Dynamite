@@ -2,13 +2,14 @@
 using System.IO;
 using Dynamite.Console.Domain;
 using Dynamite.Console.Domain.Model;
+using Dynamite.Console.Utilities;
 using Newtonsoft.Json;
 
 namespace Dynamite.Console.Infrastructure
 {
     public class FileIp4AddressRepository : IIp4AddressRepository
     {
-        static readonly string LatestIp4AddressFilePath = Path.Combine(Environment.CurrentDirectory, "LatestIp4Address.json");
+        static readonly string LatestIp4AddressFilePath = Path.Combine(AssemblyHelper.AssemblyDirectory, "LatestIp4Address.json");
 
         LatestIp4Address _latestIp4Address;
 

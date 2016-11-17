@@ -5,12 +5,14 @@ using Autofac;
 using Dynamite.Console.Domain;
 using Dynamite.Console.Infrastructure;
 using Dynamite.Console.Utilities;
+using NLog;
 
 namespace Dynamite.Console
 {
     public static class DynamiteContainer
     {
-        static readonly string DyamiteConfigurationFilePath = Path.Combine(Environment.CurrentDirectory, "Configuration", "Dynamite.json");
+        static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+        static readonly string DyamiteConfigurationFilePath = Path.Combine(AssemblyHelper.AssemblyDirectory, "Configuration", "Dynamite.json");
 
         static readonly Lazy<IContainer> LazyContainer = new Lazy<IContainer>(BuildContainer);
 
@@ -20,6 +22,8 @@ namespace Dynamite.Console
         {
             var assembly = Assembly.GetExecutingAssembly();
             var builder = new ContainerBuilder();
+
+            Logger.Info($"Loading configuration from '{DyamiteConfigurationFilePath}'...");
 
             var dynamiteConfiguration = ConfigurationLoader.Load<DynamiteConfiguration>(DyamiteConfigurationFilePath);
 

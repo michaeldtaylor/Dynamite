@@ -34,7 +34,8 @@ namespace Dynamite.Console
                         return scope.Resolve<DynamiteUpdater>();
                     }
                 });
-                x.RunAsNetworkService();
+
+                x.RunAsLocalSystem();
                 x.StartAutomatically();
                 x.EnablePauseAndContinue();
                 x.UseNLog();
