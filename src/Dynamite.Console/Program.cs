@@ -1,13 +1,7 @@
-﻿using Dynamite.Console.Providers;
-using Dynamite.Console.Providers.Ip4AddressProvider;
-using Dynamite.Console.Utilities;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using NLog;
-using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+using Autofac;
 using Topshelf;
 
 namespace Dynamite.Console
@@ -15,7 +9,6 @@ namespace Dynamite.Console
     class Program
     {
         static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-        static readonly string DyamiteConfigurationFilePath = Path.Combine(Environment.CurrentDirectory, "Configuration", "Dynamite.json");
 
         static void Main()
         {
@@ -28,28 +21,19 @@ namespace Dynamite.Console
                 }
             };
 
-            var dynamiteConfiguration = ConfigurationLoader.Load<DynamiteConfiguration>(Program.DyamiteConfigurationFilePath);
-            var dynamicDnsProviders = dynamiteConfiguration.ProviderTypeNames.Select(p =>
-            {
-                var type = Assembly.GetExecutingAssembly().GetTypes().SingleOrDefault(t => t.Name == p);
-
-                if (type == null)
-                {
-                    return null;
-                }
-
-                return (IDynamicDnsProvider)Activator.CreateInstance(type);
-            });
-
-            var latestIp4AddressProvider = new FileIp4AddressProvider();
-
             var host = HostFactory.New(x =>
             {
                 x.SetServiceName("DynamiteConsole");
                 x.SetDescription("Updates domain records for various Dynamic DNS providers.");
                 x.SetDisplayName("DynamiteConsole");
 
-                x.Service(() => new DynamiteUpdater(dynamiteConfiguration, dynamicDnsProviders, latestIp4AddressProvider));
+                x.Service(() =>
+                {
+                    using (var scope = DynamiteContainer.Current.BeginLifetimeScope())
+                    {
+                        return scope.Resolve<DynamiteUpdater>();
+                    }
+                });
                 x.RunAsNetworkService();
                 x.StartAutomatically();
                 x.EnablePauseAndContinue();

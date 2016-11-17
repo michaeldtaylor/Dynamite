@@ -1,24 +1,25 @@
-﻿using Dynamite.Console.Model;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.IO;
+using Dynamite.Console.Domain;
+using Dynamite.Console.Domain.Model;
+using Newtonsoft.Json;
 
-namespace Dynamite.Console.Providers.Ip4AddressProvider
+namespace Dynamite.Console.Infrastructure
 {
-    public class FileIp4AddressProvider : IIp4AddressProvider
+    public class FileIp4AddressRepository : IIp4AddressRepository
     {
         static readonly string LatestIp4AddressFilePath = Path.Combine(Environment.CurrentDirectory, "LatestIp4Address.json");
 
         LatestIp4Address _latestIp4Address;
 
-        public LatestIp4Address GetLatestIp4Address()
+        public LatestIp4Address GetLatest()
         {
             if (!File.Exists(LatestIp4AddressFilePath))
             {
                 return _latestIp4Address;
             }
 
-            _latestIp4Address = JsonConvert.DeserializeObject<LatestIp4Address>(File.ReadAllText(FileIp4AddressProvider.LatestIp4AddressFilePath));
+            _latestIp4Address = JsonConvert.DeserializeObject<LatestIp4Address>(File.ReadAllText(FileIp4AddressRepository.LatestIp4AddressFilePath));
 
             return _latestIp4Address;
         }

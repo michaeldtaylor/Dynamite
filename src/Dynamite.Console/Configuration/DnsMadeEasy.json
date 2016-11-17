@@ -3,13 +3,7 @@
     "DynamicDnsRecords": [
         {
             "Label": "asgard.nineworlds.io",
-            "Id": 41548228,
-            "Password": "Mike1234!"
-        },
-        {
-            "Label": "remote.manticore.co.uk",
-            "Id": 12803048,
-            "Password": "Mike1234!"
+            "Id": 41548228
         }
     ]
 }

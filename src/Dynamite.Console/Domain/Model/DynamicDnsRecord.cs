@@ -1,4 +1,4 @@
-﻿namespace Dynamite.Console.Model
+﻿namespace Dynamite.Console.Domain.Model
 {
     public class DynamicDnsRecord
     {

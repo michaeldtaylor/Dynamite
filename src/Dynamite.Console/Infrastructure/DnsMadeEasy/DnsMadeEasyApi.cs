@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Dynamite.Console.Providers.DnsMadeEasy
+namespace Dynamite.Console.Infrastructure.DnsMadeEasy
 {
     public static class DnsMadeEasyApi
     {

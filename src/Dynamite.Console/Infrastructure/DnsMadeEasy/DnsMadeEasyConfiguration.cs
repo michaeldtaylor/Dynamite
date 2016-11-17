@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using Dynamite.Console.Model;
+using Dynamite.Console.Domain;
+using Dynamite.Console.Domain.Model;
 
-namespace Dynamite.Console.Providers.DnsMadeEasy
+namespace Dynamite.Console.Infrastructure.DnsMadeEasy
 {
-    public class DnsMadeEasyConfiguration
+    public class DnsMadeEasyConfiguration : IDynamicDnsConfiguration
     {
         public DnsMadeEasyConfiguration()
         {

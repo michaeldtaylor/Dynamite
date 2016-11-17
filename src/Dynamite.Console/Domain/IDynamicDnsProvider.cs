@@ -1,4 +1,4 @@
-﻿namespace Dynamite.Console.Providers
+﻿namespace Dynamite.Console.Domain
 {
     public interface IDynamicDnsProvider
     {

@@ -1,13 +1,14 @@
-﻿using Dynamite.Console.Model;
-using System;
+﻿using System;
+using Dynamite.Console.Domain;
+using Dynamite.Console.Domain.Model;
 
-namespace Dynamite.Console.Providers.Ip4AddressProvider
+namespace Dynamite.Console.Infrastructure
 {
-    public class InMemoryIp4AddressProvider : IIp4AddressProvider
+    public class InMemoryIp4AddressRepository : IIp4AddressRepository
     {
         LatestIp4Address _ip4Address;
 
-        public LatestIp4Address GetLatestIp4Address()
+        public LatestIp4Address GetLatest()
         {
             return _ip4Address;
         }

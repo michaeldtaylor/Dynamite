@@ -1,11 +1,9 @@
-﻿using Dynamite.Console.Model;
-using Dynamite.Console.Providers;
-using Dynamite.Console.Utilities;
-using NLog;
-using System;
+﻿using NLog;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Dynamite.Console.Domain;
+using Dynamite.Console.Utilities;
 using Topshelf;
 
 namespace Dynamite.Console
@@ -17,14 +15,14 @@ namespace Dynamite.Console
         readonly CancellationTokenSource _cancellationTokenSource;
         readonly DynamiteConfiguration _dynamiteConfiguration;
         readonly IEnumerable<IDynamicDnsProvider> _dynamicDnsProviders;
-        readonly IIp4AddressProvider _ip4AddressProvider;
+        readonly IIp4AddressRepository _ip4AddressRepository;
 
-        public DynamiteUpdater(DynamiteConfiguration dynamiteConfiguration, IEnumerable<IDynamicDnsProvider> dynamicDnsProviders, IIp4AddressProvider ip4AddressProvider)
+        public DynamiteUpdater(DynamiteConfiguration dynamiteConfiguration, IEnumerable<IDynamicDnsProvider> dynamicDnsProviders, IIp4AddressRepository ip4AddressRepository)
         {
             _cancellationTokenSource = new CancellationTokenSource();
             _dynamiteConfiguration = dynamiteConfiguration;
             _dynamicDnsProviders = dynamicDnsProviders;
-            _ip4AddressProvider = ip4AddressProvider;
+            _ip4AddressRepository = ip4AddressRepository;
         }
 
         public bool Start(HostControl hostControl)
@@ -36,11 +34,11 @@ namespace Dynamite.Console
                 while (true)
                 {
                     var currentIp4Address = ExternalIp4Address.Get();
-                    var latestIp4Address = _ip4AddressProvider.GetLatestIp4Address()?.Ip4Address;
+                    var latestIp4Address = _ip4AddressRepository.GetLatest()?.Ip4Address;
 
                     if (currentIp4Address != latestIp4Address)
                     {
-                        _ip4AddressProvider.Update(currentIp4Address);
+                        _ip4AddressRepository.Update(currentIp4Address);
 
                         foreach (var dynamicDnsProvider in _dynamicDnsProviders)
                         {
