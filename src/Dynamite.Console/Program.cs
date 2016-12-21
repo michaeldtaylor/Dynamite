@@ -23,9 +23,9 @@ namespace Dynamite.Console
 
             var host = HostFactory.New(x =>
             {
-                x.SetServiceName("DynamiteConsole");
+                x.SetServiceName("Dynamite");
                 x.SetDescription("Updates domain records for various Dynamic DNS providers.");
-                x.SetDisplayName("DynamiteConsole");
+                x.SetDisplayName("Dynamite");
 
                 x.Service(() =>
                 {
